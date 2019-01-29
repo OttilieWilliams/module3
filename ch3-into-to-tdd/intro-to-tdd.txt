@@ -1,0 +1,39 @@
+TDD
+
+Advantages:
+
+- Testing ensures your code works properly under a given set of conditions. 
+- Testing allows one to ensure that changes to the code won’t break existing functionality.
+- Good testing means modular, decoupled code, which is a hallmark of good system design. 
+- Testing makes you think about the code under unusual conditions, potentially revealing 
+logical errors.
+
+Step-by-step TDD:
+
+- Write a test 
+- Test fails as there is no code 
+- Write the minimum code to make the test passes 
+- Write another test 
+- Test fails 
+- Adapt + extend current code 
+- Repeat until you can write no more tests 
+- Repeat this process for every feature, as necessary. 
+ 
+Pair programming in TDD:
+
+One person could write the unit test, see it fail, then allow the other developer to
+write the code to pass the test.  
+ 
+Roles can be switched as often as you see fit. 
+This helps both parties in the pair to stay engaged, focused on what they are doing, 
+and checking each other's work at every stage. 
+
+Why always expect failure?
+
+For TDD we write a test before writing the development code, so we should have expected failure. 
+This means that the test fails in the way that we expected it to. 
+Building this habit gives you a safe scenario. 
+
+How we will use it in the phonebook project?
+
+To ensure the project can't break.
