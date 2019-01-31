@@ -20,7 +20,14 @@ def main_function():
     if choice == 1:
         person_search_process()
     elif choice == 2:
-        business_search_process()
+        choice = type_or_name()
+        while choice != 1 and choice != 2:
+            print("Please enter a valid choice.")
+            choice = type_or_name()
+        if choice == 1:
+            business_search_process_by_name()
+        elif choice == 2:
+            business_search_process_by_type()
           
 def select_option():
     answer = input("Do you want to search for a person or business? ")
@@ -29,6 +36,19 @@ def select_option():
     elif 'b' in answer:
         answer = 2  
     return answer
+
+def type_or_name():
+    choice = ""
+    while choice == "":
+        choice = input("Enter name to search by business name and type to search by business type: ")
+        if 'name' in choice:
+            choice = 1
+        elif 'type' in choice:
+            choice = 2  
+        else:
+            choice = ""
+    return choice 
+
         
 def person_search_process():
     person_search = person_input()
@@ -64,7 +84,42 @@ def person_search_process():
             else:
                 print("Unfortunately we could not find any matching results.")
 
-def business_search_process():
+def business_search_process_by_type():
+    business_search = business_input()
+    postcode_search = ""
+    postcode_search = postcode_input()
+    if postcode_search == "":
+        result = business_query_type(business_search)
+        if result == []:
+            result_2 = business_alt_query_type(business_search)
+            if result_2 == []:
+                print("Unfortunately we could not find any matching results.")
+            else:
+                print("Unfortunately we could not find an exact match, but please find similar results below: ")
+                print(result_2)
+        else:
+            print(result)   
+    elif postcode_search != "":
+        result = business_query_type(business_search) 
+        if len(result) == 1:
+            search_lat, search_lng = convert_postcode(postcode_search)
+            database_lat, database_lng = convert_database_long_lat_one_business(result)
+            distance = distance_calculation_one_result_business(search_lat, search_lng, database_lat, database_lng, result)
+            if determine_close(distance):
+                print(result)
+            else:
+                print("The closest match is ", result)
+        else:
+            result_2 = business_alt_query_type(business_search)
+            if len(result_2) > 1:
+                search_lat, search_lng = convert_postcode(postcode_search)
+                close_results = convert_database_long_lat_multiple_business(result_2, search_lat, search_lng)
+                print("These results are close.", close_results)
+            else:
+                print("Unfortunately we could not find any matching results.")   
+
+
+def business_search_process_by_name():
     business_search = business_input()
     postcode_search = ""
     postcode_search = postcode_input()
@@ -118,7 +173,7 @@ def person_input():
     return search 
 
 def business_input():
-    search = input("Search by business name: ")
+    search = input("Enter business name or type of business: ")
     return search 
 
 def postcode_input():
@@ -145,6 +200,16 @@ def business_query(business_search):
     c.close()
     return result
 
+def business_query_type(business_search):
+    c = connect_database("phonebook.db")
+    c.execute(''' SELECT *
+              FROM business
+              WHERE business_type LIKE ?''',(business_search,)
+              )
+    result = c.fetchall()
+    c.close()
+    return result
+
 def person_alt_query(person_search):
     c = connect_database("phonebook.db")
     new_search_term = (person_search[:int(len(person_search)/2)] + "%").replace(' ', '')
@@ -164,6 +229,18 @@ def business_alt_query(business_search):
               FROM business
               WHERE business_name LIKE ? 
               ORDER BY business_name ASC''',(new_search_term,)
+              )
+    result_2 = c.fetchall()
+    c.close()
+    return result_2
+
+def business_alt_query_type(business_search):
+    c = connect_database("phonebook.db")
+    new_search_term = (business_search[:int(len(business_search)/2)] + "%").replace(' ', '')
+    c.execute(''' SELECT *
+              FROM business
+              WHERE business_type LIKE ? 
+              ORDER BY business_type ASC''',(new_search_term,)
               )
     result_2 = c.fetchall()
     c.close()
@@ -274,7 +351,7 @@ def determine_close(distance):
 
         
     
-#main_function()
+main_function()
 
 
 
