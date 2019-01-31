@@ -20,9 +20,9 @@ class search_engine_test(unittest.TestCase): #Testcase is a function in unittest
         
     def test_personal_search(self):
         with patch('builtins.input', return_value = "Menego"):
-            self.assertIsNotNone(personal_name_search())
-            self.assertIsInstance(personal_name_search(), list)
-            self.assertEqual(personal_name_search(), [('Moll', 'Menego', '72 Jenifer Trail', 'London', 'England', 'WC2H 1AF', 'United Kingdom', '0644 543 2902')])
+            self.assertIsNotNone(person_query("Menego"))
+            self.assertIsInstance(person_query("Menego"), list)
+            self.assertEqual(person_query("Menego"), [('Moll', 'Menego', '72 Jenifer Trail', 'London', 'England', 'WC2H 1AF', 'United Kingdom', '0644 543 2902')])
 
 if __name__ == '__main__':
     unittest.main()          

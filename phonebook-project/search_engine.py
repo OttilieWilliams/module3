@@ -14,74 +14,90 @@ from math import sin, cos, atan2, sqrt
                 
 def main_function():
     choice = select_option() 
-    if choice == 1:
-        person_search = person_input()
-        postcode_search = ""
-        postcode_search = postcode_input()
-        if postcode_search == "":
-            result = person_query(person_search)
-            if result == []:
-                result_2 = person_alt_query(person_search)
-                print("Unfortunately we could not find an exact match, but please find similar results below: ")
-                print(result_2)
-            else:
-                print(result)
-        elif postcode_search != "":
-            result = person_query(person_search) 
-            if len(result) == 1:
-                search_lat, search_lng = convert_postcode(postcode_search)
-                database_lat, database_lng = convert_database_long_lat_one(result)
-                distance = distance_calculation_one_result(search_lat, search_lng, database_lat, database_lng, result)
-                if determine_close(distance):
-                    print(result)
-                else:
-                    print("The closest match is ", result)
-            else:
-                result_2 = person_alt_query(person_search)
-                search_lat, search_lng = convert_postcode(postcode_search)
-                close_results = convert_database_long_lat_multiple(result_2, search_lat, search_lng)
-                print("These results are close.", close_results)
-    elif choice == 2:
-        business_search = business_input()
-        postcode_search = ""
-        postcode_search = postcode_input()
-        if postcode_search == "":
-            result = business_query(business_search)
-            if result == []:
-                result_2 = business_alt_query(business_search)
-                print("Unfortunately we could not find an exact match, but please find similar results below: ")
-                print(result_2)
-            else:
-                print(result)   
-        elif postcode_search != "":
-            result = business_query(business_search) 
-            if len(result) == 1:
-                search_lat, search_lng = convert_postcode(postcode_search)
-                database_lat, database_lng = convert_database_long_lat_one_business(result)
-                distance = distance_calculation_one_result_business(search_lat, search_lng, database_lat, database_lng, result)
-                if determine_close(distance):
-                    print(result)
-                else:
-                    print("The closest match is ", result)
-            else:
-                result_2 = business_alt_query(business_search)
-                search_lat, search_lng = convert_postcode(postcode_search)
-                close_results = convert_database_long_lat_multiple_business(result_2, search_lat, search_lng)
-                print("These results are close.", close_results)
-    else:
+    while choice != 1 and choice != 2:
         print("Please enter a valid answer.")
-        select_option()
-
+        choice = select_option()
+    if choice == 1:
+        person_search_process()
+    elif choice == 2:
+        business_search_process()
+          
 def select_option():
     answer = input("Do you want to search for a person or business? ")
     if 'p' in answer:
         answer = 1
     elif 'b' in answer:
-        answer = 2
-    else:
-        print("Please type a valid answer. ")
-        select_option()
+        answer = 2  
     return answer
+        
+def person_search_process():
+    person_search = person_input()
+    postcode_search = ""
+    postcode_search = postcode_input()
+    if postcode_search == "":
+        result = person_query(person_search)
+        if result == []:
+            result_2 = person_alt_query(person_search)
+            if result_2 == []:
+                print("Unfortunately we could not find any matching results.")
+            else:
+                print("Unfortunately we could not find an exact match, but please find similar results below: ")
+                print(result_2)
+        else:
+            print(result)
+    elif postcode_search != "":
+        result = person_query(person_search) 
+        if len(result) == 1:
+            search_lat, search_lng = convert_postcode(postcode_search)
+            database_lat, database_lng = convert_database_long_lat_one(result)
+            distance = distance_calculation_one_result(search_lat, search_lng, database_lat, database_lng, result)
+            if determine_close(distance):
+                print(result)
+            else:
+                print("The closest match is ", result)
+        else:
+            result_2 = person_alt_query(person_search)
+            if len(result_2) > 0:
+                search_lat, search_lng = convert_postcode(postcode_search)
+                close_results = convert_database_long_lat_multiple(result_2, search_lat, search_lng)
+                print("These results are close.", close_results)
+            else:
+                print("Unfortunately we could not find any matching results.")
+
+def business_search_process():
+    business_search = business_input()
+    postcode_search = ""
+    postcode_search = postcode_input()
+    if postcode_search == "":
+        result = business_query(business_search)
+        if result == []:
+            result_2 = business_alt_query(business_search)
+            if result_2 == []:
+                print("Unfortunately we could not find any matching results.")
+            else:
+                print("Unfortunately we could not find an exact match, but please find similar results below: ")
+                print(result_2)
+        else:
+            print(result)   
+    elif postcode_search != "":
+        result = business_query(business_search) 
+        if len(result) == 1:
+            search_lat, search_lng = convert_postcode(postcode_search)
+            database_lat, database_lng = convert_database_long_lat_one_business(result)
+            distance = distance_calculation_one_result_business(search_lat, search_lng, database_lat, database_lng, result)
+            if determine_close(distance):
+                print(result)
+            else:
+                print("The closest match is ", result)
+        else:
+            result_2 = business_alt_query(business_search)
+            if len(result_2) > 1:
+                search_lat, search_lng = convert_postcode(postcode_search)
+                close_results = convert_database_long_lat_multiple_business(result_2, search_lat, search_lng)
+                print("These results are close.", close_results)
+            else:
+                print("Unfortunately we could not find any matching results.")    
+
     
 def connect_database(database_name):
     try:
@@ -153,7 +169,6 @@ def business_alt_query(business_search):
     c.close()
     return result_2
 
-        
 def convert_postcode(search_postcode):
     endpoint_postcode = "https://api.postcodes.io/postcodes/"
     postcode = search_postcode.replace(' ', '')
@@ -163,20 +178,6 @@ def convert_postcode(search_postcode):
         search_lat = data_postcode['result']['latitude']
         search_lng = data_postcode['result']['longitude']
         return (search_lat, search_lng)
-
-def distance_calculation_multiple_results(search_lat, search_lng, result_2):
-    for item in result_2:
-        database_long_lat = convert_postcode(item[4])
-        if database_long_lat != None:
-            database_lat = database_long_lat[0]
-            database_lng = database_long_lat[1]
-        else:
-            pass
-    distance_lng = search_lng - abs(database_lng)
-    distance_lat = search_lat - abs(database_lat)
-    distance = (distance_lng ** 2 + distance_lat ** 2) ** 0.5
-    return distance
-
 
 def convert_database_long_lat_multiple(result_2, search_lat, search_lng):
     close_results = []
@@ -213,8 +214,6 @@ def convert_database_long_lat_multiple_business(result_2, search_lat, search_lng
         else:
             pass
     return close_results
-
-
         
 def convert_database_long_lat_one(result):
     endpoint_postcode = "https://api.postcodes.io/postcodes/"
@@ -275,7 +274,7 @@ def determine_close(distance):
 
         
     
-main_function()
+#main_function()
 
 
 
