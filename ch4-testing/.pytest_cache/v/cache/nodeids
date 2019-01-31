@@ -1,0 +1,7 @@
+[
+  "ch4_test.py::prime_test::test_checkPrime",
+  "ch4_test.py::prime_test::test_checkPrime3",
+  "ch4_test.py::prime_test::test_is_prime",
+  "ch4_test.py::prime_test::test_is_zero_not_prime",
+  "ch4_test.py::prime_test::test_negative_number"
+]
