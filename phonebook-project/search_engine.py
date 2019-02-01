@@ -91,12 +91,7 @@ def business_search_process_by_type():
     if postcode_search == "":
         result = business_query_type(business_search)
         if result == []:
-            result_2 = business_alt_query_type(business_search)
-            if result_2 == []:
-                print("Unfortunately we could not find any matching results.")
-            else:
-                print("Unfortunately we could not find an exact match, but please find similar results below: ")
-                print(result_2)
+            print("Unfortunately we could not find any matching results.")
         else:
             print(result)   
     elif postcode_search != "":
@@ -108,15 +103,16 @@ def business_search_process_by_type():
             if determine_close(distance):
                 print(result)
             else:
-                print("The closest match is ", result)
-        else:
-            result_2 = business_alt_query_type(business_search)
-            if len(result_2) > 1:
-                search_lat, search_lng = convert_postcode(postcode_search)
-                close_results = convert_database_long_lat_multiple_business(result_2, search_lat, search_lng)
+                print("No businesses found in that area, but here are some similar businesses: ", result)
+        elif len(result) > 1:
+            search_lat, search_lng = convert_postcode(postcode_search)
+            close_results = convert_database_long_lat_multiple_business(result, search_lat, search_lng)
+            if len(close_results) > 1:   
                 print("These results are close.", close_results)
             else:
-                print("Unfortunately we could not find any matching results.")   
+                print("Unfortunately we could not find any matching results.")
+        else:
+            print("Unfortunately we could not find any matching results.")   
 
 
 def business_search_process_by_name():
@@ -222,6 +218,8 @@ def person_alt_query(person_search):
     c.close()
     return result_2
 
+
+
 def business_alt_query(business_search):
     c = connect_database("phonebook.db")
     new_search_term = (business_search[:int(len(business_search)/2)] + "%").replace(' ', '')
@@ -250,12 +248,15 @@ def convert_postcode(search_postcode):
     endpoint_postcode = "https://api.postcodes.io/postcodes/"
     postcode = search_postcode.replace(' ', '')
     response = requests.get(endpoint_postcode + postcode)
-    data_postcode = response.json()
-    if response.status_code == 200:
+    try:
+        response.raise_for_status()
+        data_postcode = response.json()
         search_lat = data_postcode['result']['latitude']
         search_lng = data_postcode['result']['longitude']
-        return (search_lat, search_lng)
-
+        return search_lat, search_lng
+    except requests.exceptions.HTTPError as e:
+        print(("Error") + str(e))
+    
 def convert_database_long_lat_multiple(result_2, search_lat, search_lng):
     close_results = []
     for item in result_2:
@@ -349,9 +350,6 @@ def determine_close(distance):
         return True
 
 
-        
-    
-main_function()
 
-
+#main_function()
 

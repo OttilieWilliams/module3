@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %} {% endblock %}</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
+    <style>
+        .section {
+    position: relative;
+    background-image: url('https://www.helpr.in/images/backgrounds/section-light-bg.png');
+    background-position: bottom center;
+    background-repeat: repeat-x;
+}
+.section-inverse-color {
+    background-image: url('https://www.helpr.in/images/backgrounds/section-dark-bg.png');
+    background-color: #222222;
+    color: #5a5a5a;
+}
+
+table{width:80%;margin:auto;}
+.helpr-section {
+    height: 100%;
+    background: #655f58 url('https://www.bitcoinisle.com/wp-content/uploads/2016/06/censorship-free-social-network-akasha-aims-to-tackle-internet-censorship-with-blockchain-technology.jpeg');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+}
+.helpr-text {
+    height: 575px;
+}
+.webHomeTitle {
+    display: block;
+}
+.home-service {
+    width: 600px;
+    margin: 40px auto 100px auto;
+    border-radius: 8px;
+    background: #fff;
+    -webkit-box-shadow: 0 4px 8px rgba(2,2,2,0.14);
+    -moz-box-shadow: 0 4px 8px rgba(2,2,2,0.14);
+    box-shadow: 0 4px 8px rgba(2,2,2,0.14);
+    position: relative;
+    height: 65px;
+}
+.helpr-title {
+    padding: 190px 0 10px;
+    font-size: 70px;
+    line-height: 80px;
+    -webkit-text-shadow: 0 4px 6px rgba(0,0,0,.20);
+    -moz-text-shadow: 0 4px 6px rgba(0,0,0,.20);
+    text-shadow: 0 4px 6px rgba(0,0,0,.20);
+    font-family: 'LatoWebBlack', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: #ffffff;
+    margin: 0;
+    position: relative;
+}
+.helpr-content {
+    position: relative;
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+        header{height:400px;margin-bottom: 30px;}
+    </style>
+</head>
+
+<body>
+
+{% include 'layouts/navbar.html' %}
+
+<header>
+
+<section id="home" class="helpr-section helpr-layout-1 section section-inverse-color" >
+  <div class="container">
+    <div class="helpr-content" data-stellar-offset-parent="true">
+
+      <!-- helpr TEXT -->
+
+      <div class="helpr-text" data-wow-duration="1s" data-wow-delay="0.5s">
+        <!-- TAGLINE -->
+        <div class="webHomeTitle">
+          <h1 class="helpr-title">{% block pagetitle %} THE PHONEBOOK{% endblock %}</h1>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+</header>
+
+<!-- Page Content -->
+<div class="container">
+
+
+    {% block content %}
+        <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+                <div class="jumbotron">
+                    <h1 class="heading"
+                        style="text-align:center; font-weight:bolder;font-size:20px;font-family:monospace;"> WELCOME TO
+                        THE BT PHONEBOOK</h1>
+
+                    <div>
+                        <ul>
+                            <li>
+                                <button class="btn-large btn-info"><a href="/businesses">Businesses</a></button>
+                            </li>
+                            <li>
+                                <button class="btn-large btn-info"><a href="/people">People</a></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    {% endblock %}
+
+
+</div>
+
+<div class="footer-fixed">
+    <p>Footer</p>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+</body>
+
+</html>

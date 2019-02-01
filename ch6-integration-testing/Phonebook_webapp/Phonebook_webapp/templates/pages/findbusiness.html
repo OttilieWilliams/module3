@@ -1,0 +1,74 @@
+{% extends 'layouts/basepage.html' %}
+{% block title %}Find Person {% endblock %}
+{% block pagetitle %}Find a Business{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="jumbotron">
+                <form action="/findbusiness" method="post">
+                <table>
+                    <tr>
+                        <td><label for="businessname">Business Name</label></td>
+                        <td><label for="category">Business Category</label></td>
+                        <td><label for="location">Business Location</label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="bizname" id="bizname"></td>
+                        <td>
+                            <select name="biz_cat" id="biz_cat">
+                                <option value=""></option>
+                            {% for category in categories %}
+                                <option value="{{ category | title }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                        </td>
+                        <td>
+                            <select name="biz_loc" id="biz_loc">
+                                <option value=""></option>
+                            {% for city in cities %}
+                                <option value="{{ city | title }}">{{ city }}</option>
+                            {% endfor %}
+                        </select>
+                        </td>
+                    </tr>
+                </table>
+
+                    <button class="btn-large"><input type="submit"></button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" style="display: {% if search %}inline-block {% else %} none; {% endif %}">
+
+    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>City</th>
+                <th>Region</th>
+                <th>Address</th>
+                <th>Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for business in search %}
+            <tr>
+                <td>{{ business[0] }}</td>
+                <td>{{ business[1] }}</td>
+                <td>{{ business[3] }}</td>
+                <td>{{ business[4] }}</td>
+                <td>{{ business[5] }}</td>
+                <td>{{ business[6] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+            </table>
+
+
+    </div>
+
+{% endblock %}
