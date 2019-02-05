@@ -4,7 +4,7 @@ from os.path import exists
 class Phonebook():
     def __init__(self):
         #initializes path to db
-        self.db_path = 'C:/Users/crypteye/Desktop/Phonebook_webapp/Phonebook_webapp/static/db/Phonebook.db'
+        self.db_path = 'C:/Users/ottil/Desktop/module3/ch6-integration-testing/Phonebook_webapp/static/db/Phonebook.db'
 
 
     def check_db(self):

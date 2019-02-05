@@ -20,9 +20,6 @@ def allpeople():
     people = phonebook.get_all_people()
     return render_template('pages/allpeople.html', people=people)
 
-
-
-
 @app.route('/findbusiness', methods=['GET','POST'])
 def searchbusiness():
     categories = sorted([i[0].strip() for i in list(set(phonebook.get_categories()))])
