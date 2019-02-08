@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Feb  1 15:14:13 2019
+
+@author: ottil
+"""
+
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="container">
+
+
+<div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+        <th>Business Name</th>
+        <th>Address Line 1</th>
+        <th>Address Line 2</th>
+        <th>Address Line 3</th>
+        <th>Postcode</th>
+        <th>Country</th>
+        <th>Telephone Number</th>
+        <th>Business Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for bis in businesses %}
+        <tr>
+            <td>{{ bis[0] }}</td>
+            <td>{{ bis[1] }}</td>
+            <td>{{ bis[2] }}</td>
+            <td>{{ bis[3] }}</td>
+            <td>{{ bis[4] }}</td>
+            <td>{{ bis[5] }}</td>
+            <td>{{ bis[6] }}</td>
+            <td>{{ bis[7] }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}  
+
+  

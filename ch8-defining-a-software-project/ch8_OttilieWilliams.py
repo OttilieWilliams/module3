@@ -36,7 +36,7 @@ Created on Wed Feb  6 10:03:41 2019
 
 #Could Have
 #Limit the amount of results returned
-#Ability to search database for similar search queries
+#Ability to search database for  similar search queries
 
 #Won't Have
 #Further interactions with search results (gifts, mapping, website links etc)

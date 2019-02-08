@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 """
 Created on Wed Jan 30 14:15:03 2019
 
@@ -177,7 +177,7 @@ def postcode_input():
     return postcode
 
 def person_query(person_search):
-    c = connect_database("phonebook.db")
+    c = connect_database("static/db/phonebook.db")
     c.execute(''' SELECT *
               FROM personal
               WHERE last_name LIKE ?''',(person_search,)
@@ -187,7 +187,7 @@ def person_query(person_search):
     return result
 
 def business_query(business_search):
-    c = connect_database("phonebook.db")
+    c = connect_database("static/db/phonebook.db")
     c.execute(''' SELECT *
               FROM business
               WHERE business_name LIKE ?''',(business_search,)
@@ -197,7 +197,7 @@ def business_query(business_search):
     return result
 
 def business_query_type(business_search):
-    c = connect_database("phonebook.db")
+    c = connect_database("static/db/phonebook.db")
     c.execute(''' SELECT *
               FROM business
               WHERE business_type LIKE ?''',(business_search,)
@@ -206,8 +206,23 @@ def business_query_type(business_search):
     c.close()
     return result
 
+def get_all_businesses():
+    c = connect_database("static/db/phonebook.db")
+    c.execute('''SELECT *
+              FROM business''')        
+    results = c.fetchall()
+    return results
+
+def get_all_people():
+    c = connect_database("static/db/phonebook.db")
+    c.execute('''SELECT *
+              FROM personal''')        
+    results = c.fetchall()
+    return results
+
+
 def person_alt_query(person_search):
-    c = connect_database("phonebook.db")
+    c = connect_database("static/db/phonebook.db")
     new_search_term = (person_search[:int(len(person_search)/2)] + "%").replace(' ', '')
     c.execute(''' SELECT *
               FROM personal
@@ -221,7 +236,7 @@ def person_alt_query(person_search):
 
 
 def business_alt_query(business_search):
-    c = connect_database("phonebook.db")
+    c = connect_database("static/db/phonebook.db")
     new_search_term = (business_search[:int(len(business_search)/2)] + "%").replace(' ', '')
     c.execute(''' SELECT *
               FROM business
@@ -233,7 +248,7 @@ def business_alt_query(business_search):
     return result_2
 
 def business_alt_query_type(business_search):
-    c = connect_database("phonebook.db")
+    c = connect_database("static/db/phonebook.db")
     new_search_term = (business_search[:int(len(business_search)/2)] + "%").replace(' ', '')
     c.execute(''' SELECT *
               FROM business
@@ -351,5 +366,4 @@ def determine_close(distance):
 
 
 
-main_function()
 
