@@ -13,9 +13,33 @@ button {
   margin: 0 auto;
   display: block;
   margin: 20px;
-  margin-top: 200px;
+  border: none;
+}
+
+.button-individual {
+  padding: 20px;
+  margin: 50px;
+  background: none repeat scroll 0 0 #FFF;
 }
 
 #buttons {
   display: flex;
+  padding-top: 120px;
+
+}
+
+
+main {
+  background-image: url("background_03.jpg");
+  background-size: cover;
+  height: 550px;
+}
+
+.page-link {
+  color: black;
+}
+
+.page-item.active .page-link {
+  background-color: black;
+  border-color: black;
 }

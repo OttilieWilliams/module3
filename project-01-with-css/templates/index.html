@@ -10,28 +10,26 @@
 
   <title>Harriet and Ottilie's Phonebook</title>
 
-
-
   <!-- Bootstrap core CSS -->
   <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 
 
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
-    <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
-    <link rel="stylesheet" href='{{url_for("static", filename="../static/css/main.css")}}'>
+  <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css">
+  <link rel="stylesheet" href='{{url_for("static", filename="../static/css/main.css")}}'>
 
 
 </head>
@@ -59,29 +57,40 @@
     </div>
   </nav>
 
+  {% block content %}
 
-{% block content %}
 
-<main>
-<div id="buttons">
+    <main>
 
-<button onclick="window.location.href = '/business';">Search for a business</button>
-<button onclick="window.location.href = '/personal';">Search for a person</button>
+      <div id="buttons">
 
-</div>
-</main>
-{% endblock %}
- 
-<script>
-    $(document).ready(function () {
+        <div class="button-individual">
+          <img src="../static/css/person.png">
+          <button onclick="window.location.href = '/business';">Search for a business</button>
+        </div>
+
+        <div class="button-individual">
+          <img src="../static/css/business.png">
+          <button onclick="window.location.href = '/personal';">Search for a person</button>
+        </div>
+
+      </div>
+      
+    </main>
+
+    {% endblock %}
+
+    <script>
+      $(document).ready(function() {
         $('#example').DataTable();
-    });
-</script>
+      });
+    </script>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="static/jquery/jquery.min.js"></script>
-  <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/jquery/jquery.min.js"></script>
+    <script src="static/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 
 </html>
